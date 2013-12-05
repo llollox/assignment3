@@ -1,4 +1,4 @@
-package introsde.ws;
+package assignment3.ws;
 
 import java.net.MalformedURLException;
 import java.net.URL;

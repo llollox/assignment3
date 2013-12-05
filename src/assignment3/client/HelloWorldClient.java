@@ -1,7 +1,7 @@
-package introsde.client;
+package assignment3.client;
 
-import introsde.ws.HelloWorld;
-import introsde.ws.HelloWorldImplService;
+import assignment3.ws.HelloWorld;
+import assignment3.ws.HelloWorldImplService;
 
 public class HelloWorldClient{
     

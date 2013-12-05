@@ -1,4 +1,4 @@
-package introsde.ws;
+package assignment3.ws;
 
 import javax.jws.WebMethod;
 

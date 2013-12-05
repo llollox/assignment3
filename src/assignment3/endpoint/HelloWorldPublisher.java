@@ -1,7 +1,7 @@
-package introsde.endpoint;
+package assignment3.endpoint;
 import javax.xml.ws.Endpoint;
 
-import introsde.ws.HelloWorldImpl;
+import assignment3.ws.HelloWorldImpl;
 
 //Endpoint publisher
 
