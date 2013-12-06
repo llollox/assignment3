@@ -16,7 +16,7 @@ import javax.xml.ws.Action;
 
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 
-public interface HelloWorld {
+public interface SoapInterface {
 
  @WebMethod
 

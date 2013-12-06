@@ -12,7 +12,7 @@ import javax.xml.ws.WebServiceFeature;
 @WebServiceClient(name = "HelloWorldImplService", targetNamespace = "http://ws.introsde/", 
 wsdlLocation = "http://localhost:6900/ws/hello?wsdl")
 
-public class HelloWorldImplService extends Service{
+public class SoapImplService extends Service{
 
   private final static URL HELLOWORLDIMPLSERVICE_WSDL_LOCATION;
   private final static WebServiceException HELLOWORLDIMPLSERVICE_EXCEPTION;
@@ -31,38 +31,38 @@ public class HelloWorldImplService extends Service{
 	 HELLOWORLDIMPLSERVICE_EXCEPTION = e;
   }
  
-  public HelloWorldImplService() {
+  public SoapImplService() {
 	 super(__getWsdlLocation(), HELLOWORLDIMPLSERVICE_QNAME);
   }
 
-  public HelloWorldImplService(WebServiceFeature... features) {
+  public SoapImplService(WebServiceFeature... features) {
 	 super(__getWsdlLocation(), HELLOWORLDIMPLSERVICE_QNAME, features);
   }
 
-  public HelloWorldImplService(URL wsdlLocation) {
+  public SoapImplService(URL wsdlLocation) {
 	 super(wsdlLocation, HELLOWORLDIMPLSERVICE_QNAME);
   }
 
-  public HelloWorldImplService(URL wsdlLocation, WebServiceFeature... features) {
+  public SoapImplService(URL wsdlLocation, WebServiceFeature... features) {
 	  super(wsdlLocation, HELLOWORLDIMPLSERVICE_QNAME, features);
   }
 
-  public HelloWorldImplService(URL wsdlLocation, QName serviceName) {
+  public SoapImplService(URL wsdlLocation, QName serviceName) {
 	  super(wsdlLocation, serviceName);
   }
 
-  public HelloWorldImplService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+  public SoapImplService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
 	  super(wsdlLocation, serviceName, features);
   }
 
   @WebEndpoint(name = "HelloWorldImplPort")
-  public HelloWorld getHelloWorldImplPort() {
-	  return super.getPort(new QName("http://ws.introsde/", "HelloWorldImplPort"), HelloWorld.class);
+  public SoapInterface getHelloWorldImplPort() {
+	  return super.getPort(new QName("http://ws.introsde/", "HelloWorldImplPort"), SoapInterface.class);
   }
 
   @WebEndpoint(name = "HelloWorldImplPort")
-  public HelloWorld getHelloWorldImplPort(WebServiceFeature... features) {
-	  return super.getPort(new QName("http://ws.introsde/", "HelloWorldImplPort"), HelloWorld.class, features);
+  public SoapInterface getHelloWorldImplPort(WebServiceFeature... features) {
+	  return super.getPort(new QName("http://ws.introsde/", "HelloWorldImplPort"), SoapInterface.class, features);
   }
 
   private static URL __getWsdlLocation() {

@@ -6,7 +6,7 @@ import javax.jws.WebService;
 
 @WebService(endpointInterface = "introsde.ws.HelloWorld")
 
-public class HelloWorldImpl implements HelloWorld {
+public class SoapImplementation implements SoapInterface {
 
 @Override
 
