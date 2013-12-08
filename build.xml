@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project 
+	name="Assignment3" basedir="." 
+	default="execute" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="build.dir" value="build" />
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+
+	<path id="ivy.lib">
+		<pathelement location="${basedir}/lib/ivy-2.3.0.jar" />
+	</path>
+
+	<taskdef uri="antlib:fr.jayasoft.ivy.ant" resource="fr/jayasoft/ivy/ant/antlib.xml" classpathref="ivy.lib" />
+
+	<target name="init">
+		<!-- <echo>Creating directories</echo> -->
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<!-- <echo>Finish creating directories</echo> <echo>Retrieving ivy</echo> -->
+		<ivy:retrieve />
+	</target>
+
+	<target name="compile" depends="init">
+		<!-- <echo>Compiling sources</echo> -->
+		<javac debug="on" destdir="${build.dir}" srcdir="${src.dir}" includeantruntime="false">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		<!-- <echo>Finish compiling sources</echo> -->
+	</target>
+	
+	<target name="startServer" depends="compile">
+		<java classname="assignment3.endpoint.SoapPublisher" classpath="${build.dir}">
+      <classpath>
+        <fileset dir="${lib.dir}"><include name="**/*.jar" /></fileset>
+      </classpath>
+    </java>
+		<echo>Server Started on http://localhost:6900/ws/people</echo>
+	</target>
+
+	<target name="execute" depends="startServer">
+		<java classname="assignment3.client.SoapClient" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}"><include name="**/*.jar" /></fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="clean">
+		<!-- <echo>Deleting directories</echo> -->
+		<delete dir="${build.dir}" />
+		<delete dir="${lib.dir}" />
+		<delete dir="${xml.output.dir}" />
+		<delete dir="bin" />
+		<!-- <echo>Finish deleting directories</echo> -->
+	</target>
+</project>  

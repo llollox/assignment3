@@ -3,18 +3,32 @@ package assignment3.client;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import assignment3.hibernate.PersonHibernate;
+import assignment3.model.Person;
 import assignment3.utils.Utils;
-import assignment3.ws.SoapInterface;
-import assignment3.ws.SoapImplService;
+import assignment3.ws.Soap;
+import assignment3.ws.SoapImpl;
+import assignment3.ws.SoapService;
 
 public class SoapClient{
+	
+	public static Person selectedPerson = null;
+	public static Soap soapInterface = new SoapService().getSoapImplPort();
     
+	public static Person getSelectedPerson() {
+		return selectedPerson;
+	}
+
+	public static void setSelectedPerson(Person selectedPerson) {
+		SoapClient.selectedPerson = selectedPerson;
+	}
+	
+
 	public static void main(String[] args) throws IOException, ParseException {
-    	SoapImplService helloService = new SoapImplService();
-    	SoapInterface hello = helloService.getHelloWorldImplPort();
-    	System.out.println(hello.getHelloWorldAsString("Pinco"));
     	
     	int option_selected = 0;
 		do {
@@ -26,7 +40,10 @@ public class SoapClient{
 				break;
 				
 			case 1:// Print all people
-				System.out.println("Selected option 1 - Print all people!");
+				ArrayList<Person> people = soapInterface.getPeople();
+				for (Person person : people) {
+					System.out.println(person);
+				}
 				break;
 			
 			case 2:// Print all people by a condition
@@ -37,7 +54,6 @@ public class SoapClient{
 				if((condition != null) && (operator != null)  && (value != null)){
 					
 					//SEARCH PEOPLE BY CONDITIONS
-					
 					System.out.println("Selected option 2 - Print all people where " + condition + " " + operator + " " + value);
 				}
 				else{
@@ -49,33 +65,62 @@ public class SoapClient{
 			
 			case 3:// Select a person by Id
 				try {
-					int personId = Integer.parseInt(Utils.inputString("Person Id"));
-					System.out.println("Selected option 3 - Select Person ("+ personId +")");
+					Long personId = Long.parseLong(Utils.inputString("Person Id"));
+					Person p = soapInterface.getPerson(personId);
+					if (p != null){
+						SoapClient.setSelectedPerson(p);
+						personalMenu();
+					} else {
+						System.out.println("\nPerson not found!");
+					}
 					
-					//SET SELECTED PERSON
-					
-					personalMenu();
 				} catch (Exception e) {
 					option_selected = 99; //string not recognized
 				}
 				
 				break;
-				
-			case 4:// Select a person by Firstname and Lastname
-				String selectFirstname = Utils.inputString("Firstname");
-				String selectLastname = Utils.inputString("Lastname");
-				System.out.println("Selected option 4 - Select Person ("+ selectFirstname + ", " + selectLastname +")");
-				
-				//SET SELECTED PERSON
-				
-				personalMenu();
-				break;
 			
-			case 5:// Create a new Person
-				String firstname = Utils.inputString("Firstname");
-				String lastname = Utils.inputString("Lastname");
-				String birthdate = Utils.inputString("birthdate (dd-mm-YYYY)");
-				System.out.println("Selected option 3 - Create Person: "+ firstname + " " + lastname + " - " + birthdate);
+			case 4:// Create a new Person
+				try {
+					String firstname = Utils.inputString("Firstname");
+					String lastname = Utils.inputString("Lastname");
+					Date birthdate = new SimpleDateFormat("dd-MM-yyyy").parse(Utils.inputString("birthdate (dd-mm-yyyy)"));
+					
+					Person p = soapInterface.savePerson(new Person(firstname, lastname, birthdate));
+					
+					System.out.println("\n"+p);
+				} catch (Exception e) {
+					option_selected = 99; //string not recognized
+				}
+				break;
+
+			case 5:// Update Person
+				try {
+					Long personId = Long.parseLong(Utils.inputString("Person Id"));
+					Person updatedPerson = soapInterface.getPerson(personId);
+					
+					String updatedFirstname = Utils.inputString("Firstname");
+					String updatedLastname = Utils.inputString("Lastname");
+					Date updatedBirthdate = new SimpleDateFormat("dd-MM-yyyy").parse(Utils.inputString("birthdate (dd-mm-yyyy)"));
+					
+					updatedPerson.setFirstname(updatedFirstname);
+					updatedPerson.setLastname(updatedLastname);
+					updatedPerson.setBirthdate(updatedBirthdate);
+					
+					System.out.println("\nPerson Modified: "+soapInterface.updatePerson(updatedPerson));
+				
+				} catch (Exception e) {
+					option_selected = 99; //string not recognized
+				}
+				break;
+				
+			case 6: //Delete Person
+				try {
+					Long personId = Long.parseLong(Utils.inputString("Person Id"));
+					System.out.println("\nPerson Deleted: "+soapInterface.deletePerson(personId));
+				} catch (Exception e) {
+					//option_selected = 99; //string not recognized
+				}
 				break;
 				
 			default:
@@ -92,28 +137,26 @@ public class SoapClient{
 		do {
 			option_selected = Utils.getPersonalMenuSelection();
 			switch (option_selected) {
-			
+				
+				case 0:
+					selectedPerson = null;
+					break;	
+				
 				case 1:
-					System.out.println("Selected option 1 - Read Personal Info!");
+					System.out.println("Selected option 1 - Read Current Health Profile!");
 					break;
 				
 				case 2:
 					System.out.println("Selected option 2 - Read Health Profile History!");
+					System.out.println(soapInterface.getPersonHealthProfileHistory(
+							SoapClient.getSelectedPerson().getPerson_id()));
 					break;
 				
 				case 3:
-					String firstname = Utils.inputString("Firstname");
-					String lastname = Utils.inputString("Lastname");
-					String birthdate = Utils.inputString("birthdate (dd-mm-YYYY)");
-					System.out.println("Selected option 3 - Update Person with new values:" + firstname + " " + lastname + ": " + birthdate);
-					break;
-					
-				case 4:
-					System.out.println("Selected option 4 - Delete Person");
-					option_selected = 0; //back to main menu
+					System.out.println("Selected option 3 - Create new HealthProfile!");
 					break;
 				
-				case 5:
+				case 4:
 				
 					try {
 						Double weight = Double.parseDouble(Utils.inputString("Weight"));
@@ -128,7 +171,7 @@ public class SoapClient{
 							
 					break;
 					
-				case 6:
+				case 5:
 					try {
 						Double updatedWeight = Double.parseDouble(Utils.inputString("Weight"));
 						Double updatedHeight = Double.parseDouble(Utils.inputString("Height"));
@@ -143,7 +186,7 @@ public class SoapClient{
 					}
 					break;
 					
-				case 7:
+				case 6:
 					try {
 						int healthProfileId = Integer.parseInt(Utils.inputString("Health Profile Id"));
 						System.out.println("Selected option 7 - Delete Health Profile (" + healthProfileId + ")");
