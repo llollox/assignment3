@@ -1,6 +1,6 @@
 /target
 /build
-
+/lib
 .settings
 .classpath
 .project
