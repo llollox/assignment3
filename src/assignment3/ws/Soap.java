@@ -7,7 +7,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.ws.Action;
 
 import assignment3.model.HealthProfile;
 import assignment3.model.Person;
@@ -18,10 +17,6 @@ import assignment3.model.Person;
 public interface Soap {
 	@WebMethod
 	@WebResult(partName = "return")
-	
-	@Action(input = "http://ws.assignment3/Soap/getHelloWorldAsStringRequest", 
-		output = "http://ws.assignment3/Soap/getHelloWorldAsStringResponse")
-	public String getHelloWorldAsString(@WebParam(name = "arg0", partName = "arg0") String arg0);
 	
 	public Person getPerson(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
@@ -34,5 +29,13 @@ public interface Soap {
 	public Person deletePerson(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
 	public ArrayList<HealthProfile> getPersonHealthProfileHistory(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	
+	public HealthProfile getHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	
+	public HealthProfile saveHealthProfile(@WebParam(name = "arg0", partName = "arg0") HealthProfile arg0);
+	
+	public HealthProfile updateHealthProfile(@WebParam(name = "arg0", partName = "arg0") HealthProfile arg0);
+	
+	public HealthProfile deleteHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 
 }

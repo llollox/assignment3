@@ -59,14 +59,15 @@ public class HealthProfileHibernate {
 		return hp;
 	}
 
-	public static void deleteHealthProfile(Long hp_id) {
+	public static HealthProfile deleteHealthProfile(Long hp_id) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
+		HealthProfile hp = null;
 
 		try {
 			transaction = session.beginTransaction();
 
-			HealthProfile hp = (HealthProfile) session.get(HealthProfile.class,
+			hp = (HealthProfile) session.get(HealthProfile.class,
 					hp_id);
 			session.delete(hp);
 
@@ -79,9 +80,11 @@ public class HealthProfileHibernate {
 		} finally {
 			session.close();
 		}
+		
+		return hp;
 	}
 
-	public static HealthProfile getSpecificHealthProfile(Long p_id, Long hp_id) {
+	public static HealthProfile getHealthProfile(Long hp_id) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 		HealthProfile hp = null;
@@ -90,7 +93,7 @@ public class HealthProfileHibernate {
 
 			hp = (HealthProfile) session.createCriteria(HealthProfile.class)
 					.add(Restrictions.eq("healthprofile_id", hp_id))
-					.add(Restrictions.eq("person_id", p_id)).uniqueResult();
+					.uniqueResult();
 
 			transaction.commit();
 		} catch (HibernateException e) {

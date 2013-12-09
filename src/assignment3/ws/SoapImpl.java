@@ -1,9 +1,7 @@
 package assignment3.ws;
 
 import java.util.ArrayList;
-
 import javax.jws.WebService;
-
 import assignment3.hibernate.HealthProfileHibernate;
 import assignment3.hibernate.PersonHibernate;
 import assignment3.model.HealthProfile;
@@ -13,12 +11,8 @@ import assignment3.model.Person;
 @WebService(endpointInterface = "assignment3.ws.Soap")
 
 public class SoapImpl implements Soap {
-	@Override
-
-	public String getHelloWorldAsString(String name) {
-		return "Hello World JAX-WS " + name;
-	}
 	
+	@Override
 	public ArrayList<Person> getPeople() {
 		return PersonHibernate.getPeople();
 	}
@@ -43,4 +37,26 @@ public class SoapImpl implements Soap {
 	public ArrayList<HealthProfile> getPersonHealthProfileHistory(Long personId) {
 		return HealthProfileHibernate.getPersonHealthProfileHistory(personId);
 	}
+	
+	@Override
+	public HealthProfile getHealthProfile(Long hpId) {
+		return HealthProfileHibernate.getHealthProfile(hpId);	
+	}
+
+	@Override
+	public HealthProfile saveHealthProfile(HealthProfile hp) {
+		return HealthProfileHibernate.saveHealthProfile(hp);
+	}
+
+	@Override
+	public HealthProfile updateHealthProfile(HealthProfile hp) {
+		return HealthProfileHibernate.updateHealthProfile(hp);
+	}
+
+	@Override
+	public HealthProfile deleteHealthProfile(Long hpId) {
+		return HealthProfileHibernate.deleteHealthProfile(hpId);
+	}
+
+	
 }

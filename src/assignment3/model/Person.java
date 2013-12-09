@@ -71,7 +71,7 @@ public class Person {
 	}
 	
 	public String toString(){
-		SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY");
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		if (person_id != null)
 			return person_id + ") " + firstname + " " + lastname + ": " + df.format(birthdate);
 		else 
