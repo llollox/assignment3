@@ -48,15 +48,12 @@ public class SoapClient{
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
 					Person p = soapInterface.getPerson(personId);
-					if (p != null){
-						SoapClient.setSelectedPerson(p);
-						personalMenu();
-					} else {
-						System.out.println("\nPerson not found!");
-					}
+					
+					SoapClient.setSelectedPerson(p);
+					personalMenu();
 					
 				} catch (Exception e) {
-					option_selected = 99; //string not recognized
+					System.out.println("\nPerson not found!");
 				}
 				
 				break;
@@ -71,7 +68,7 @@ public class SoapClient{
 					
 					System.out.println("\nPerson Created: "+person);
 				} catch (Exception e) {
-					option_selected = 99; //string not recognized
+					System.out.println("\nSorry! Some problems occurs during create person!");
 				}
 				break;
 
@@ -91,7 +88,7 @@ public class SoapClient{
 					System.out.println("\nPerson Modified: "+soapInterface.updatePerson(person));
 				
 				} catch (Exception e) {
-					option_selected = 99; //string not recognized
+					System.out.println("\nSorry! Some problems occurs during update person!");
 				}
 				break;
 				
@@ -100,7 +97,7 @@ public class SoapClient{
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
 					System.out.println("\nPerson Deleted: "+soapInterface.deletePerson(personId));
 				} catch (Exception e) {
-					option_selected = 99; //string not recognized
+					System.out.println("\nSorry! Some problems occurs during delete person!");
 				}
 				break;
 				
@@ -124,13 +121,22 @@ public class SoapClient{
 					break;	
 				
 				case 1: // Read CURRENT Health Profile
-					System.out.println(soapInterface.getCurrentHealthProfile(SoapClient.getSelectedPerson().getPerson_id()));
+					try {
+						HealthProfile hp = soapInterface.getCurrentHealthProfile(SoapClient.getSelectedPerson().getPerson_id());
+						System.out.println(hp);
+					} catch (Exception e) {
+						System.out.println("\nHealthProfile not found!");
+					}
 					break;
 				
 				case 2: // Read Health Profile History
-					for (HealthProfile hp : soapInterface.getPersonHealthProfileHistory(
-							SoapClient.getSelectedPerson().getPerson_id()).getHealthProfileHistory()) {
-						System.out.println(hp);
+					try {
+						for (HealthProfile hp : soapInterface.getPersonHealthProfileHistory(
+								SoapClient.getSelectedPerson().getPerson_id()).getHealthProfileHistory()) {
+							System.out.println(hp);
+						}
+					} catch (Exception e) {
+						System.out.println("\nSorry! Some problems occurs during get health profile history!");
 					}
 					break;
 				
@@ -146,7 +152,7 @@ public class SoapClient{
 						System.out.println("\nHealthProfile Created: "+soapInterface.saveHealthProfile(hp));		
 						
 					} catch (Exception e) {
-						option_selected = 99; //string not recognized
+						System.out.println("\nSorry! Some problems occurs during create new health profile!");
 					}
 					break;
 				
@@ -170,7 +176,7 @@ public class SoapClient{
 						
 						System.out.println("\nHealthProfile Updated: "+soapInterface.updateHealthProfile(hp));
 					} catch (Exception e) {
-						option_selected = 99; //string not recognized
+						System.out.println("\nSorry! Some problems occurs during update new health profile!");
 					}
 							
 					break;
@@ -180,7 +186,7 @@ public class SoapClient{
 						Long healthProfileId = Long.parseLong(Utils.inputString("Health Profile Id"));
 						System.out.println("\nHealthProfile Deleted: "+soapInterface.deleteHealthProfile(healthProfileId));
 					} catch (Exception e) {
-						option_selected = 99; //string not recognized
+						System.out.println("\nSorry! Some problems occurs during delete new health profile!");
 					}
 					break;
 				
