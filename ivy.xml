@@ -10,6 +10,10 @@
 		<dependency org="org.hibernate" name="hibernate-core" rev="4.1.4.Final"/>
 
 		<dependency org="org.xerial" name="sqlite-jdbc" rev="3.7.2"/>
+            
+    <dependency org="com.sun.xml.ws" name="jaxws-rt" rev="2.2.8"/>
+    <dependency org="javax.xml.ws" name="jaxws-api" rev="2.2.8"/>
+    <dependency org="com.sun.xml.ws" name="jaxws-tools" rev="2.2.8"/>
 
 	</dependencies>
 

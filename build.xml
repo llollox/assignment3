@@ -35,14 +35,16 @@
 	
 	<target name="startServer" depends="compile">
 		<java classname="assignment3.endpoint.SoapPublisher" classpath="${build.dir}">
-      <classpath>
-        <fileset dir="${lib.dir}"><include name="**/*.jar" /></fileset>
+			<classpath>
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
       </classpath>
-    </java>
-		<echo>Server Started on http://localhost:6900/ws/people</echo>
+		</java>
+		<echo message="Server Started on http://localhost:6900/ws/people"/>
 	</target>
 
-	<target name="execute" depends="startServer">
+	<target name="execute" depends="compile">
 		<java classname="assignment3.client.SoapClient" classpath="${build.dir}">
 			<classpath>
 				<fileset dir="${lib.dir}"><include name="**/*.jar" /></fileset>
