@@ -56,7 +56,6 @@ public class PersonHibernate {
 		} finally {
 			session.close();
 		}
-
 		return people;
 	}
 	

@@ -12,8 +12,12 @@
 		<dependency org="org.xerial" name="sqlite-jdbc" rev="3.7.2"/>
             
     <dependency org="com.sun.xml.ws" name="jaxws-rt" rev="2.2.8"/>
+    <dependency org="javax.jws" name="jsr181-api" rev="1.0-MR1"/>
     <dependency org="javax.xml.ws" name="jaxws-api" rev="2.2.8"/>
-    <dependency org="com.sun.xml.ws" name="jaxws-tools" rev="2.2.8"/>
+    <dependency org="javax.xml.soap" name="javax.xml.soap-api" rev="1.3.7"/>
+            
+            
+            
 
 	</dependencies>
 

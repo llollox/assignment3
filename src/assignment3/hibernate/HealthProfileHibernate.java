@@ -183,4 +183,31 @@ public class HealthProfileHibernate {
 
 		return historyHealthProfiles;
 	}
+	
+	public static HealthProfile getCurrentPersonHealthProfile(
+			Long p_id) {
+		Session session = Hibernate.getSessionFactory().openSession();
+		Transaction transaction = null;
+		HealthProfile hp = null;
+		try {
+			transaction = session.beginTransaction();
+
+			hp = (HealthProfile) session
+					.createCriteria(HealthProfile.class)
+					.add(Restrictions.eq("person_id", p_id))
+					.addOrder(Order.desc("date")).setMaxResults(1).uniqueResult();
+
+			transaction.commit();
+
+		} catch (HibernateException e) {
+			// rollback transaction
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}
+
+		return hp;
+	}
 }

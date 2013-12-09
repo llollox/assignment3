@@ -38,30 +38,13 @@ public class SoapClient{
 				break;
 				
 			case 1:// Print all people
-				ArrayList<Person> people = soapInterface.getPeople();
-				for (Person person : people) {
+				
+				for (Person person : soapInterface.getPeople().getPeople()) {
 					System.out.println(person);
 				}
 				break;
 			
-			case 2:// Print all people by a condition
-				String condition = Utils.checkCondition(Utils.inputString("Condition (weight / height / bmi)"));
-				String operator = Utils.checkOperator(Utils.inputString("Operator ( > / >= / < / ...)"));
-				String value = Utils.checkValue(Utils.inputString("Value"));
-				
-				if((condition != null) && (operator != null)  && (value != null)){
-					
-					//SEARCH PEOPLE BY CONDITIONS
-					System.out.println("Selected option 2 - Print all people where " + condition + " " + operator + " " + value);
-				}
-				else{
-					option_selected = 99; //some strings not recognized
-				}
-				
-				
-				break;
-			
-			case 3:// Select a person by Id
+			case 2:// Select a person by Id
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
 					Person p = soapInterface.getPerson(personId);
@@ -78,7 +61,7 @@ public class SoapClient{
 				
 				break;
 			
-			case 4:// Create a new Person
+			case 3:// Create a new Person
 				try {
 					String firstname = Utils.inputString("Firstname");
 					String lastname = Utils.inputString("Lastname");
@@ -92,7 +75,7 @@ public class SoapClient{
 				}
 				break;
 
-			case 5:// Update Person
+			case 4:// Update Person
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
 					Person person = soapInterface.getPerson(personId);
@@ -112,7 +95,7 @@ public class SoapClient{
 				}
 				break;
 				
-			case 6: //Delete Person
+			case 5: //Delete Person
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
 					System.out.println("\nPerson Deleted: "+soapInterface.deletePerson(personId));
@@ -141,13 +124,14 @@ public class SoapClient{
 					break;	
 				
 				case 1: // Read CURRENT Health Profile
-					System.out.println("Selected option 1 - Read Current Health Profile!");
+					System.out.println(soapInterface.getCurrentHealthProfile(SoapClient.getSelectedPerson().getPerson_id()));
 					break;
 				
 				case 2: // Read Health Profile History
-					System.out.println("Selected option 2 - Read Health Profile History!");
-					System.out.println(soapInterface.getPersonHealthProfileHistory(
-							SoapClient.getSelectedPerson().getPerson_id()));
+					for (HealthProfile hp : soapInterface.getPersonHealthProfileHistory(
+							SoapClient.getSelectedPerson().getPerson_id()).getHealthProfileHistory()) {
+						System.out.println(hp);
+					}
 					break;
 				
 				case 3: // Create new Health Profile!

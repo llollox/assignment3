@@ -15,11 +15,10 @@ public class Utils {
 	public static int getMenuSelection() throws IOException{
 		System.out.println("\nWhat do you want to do?");
 		System.out.println("1 - Print all people");
-		System.out.println("2 - Print all people by a condition");
-		System.out.println("3 - Select a person by Id");
-		System.out.println("4 - Create new Person");
-		System.out.println("5 - Update Person");
-		System.out.println("6 - Delete Person");
+		System.out.println("2 - Select a person by Id");
+		System.out.println("3 - Create new Person");
+		System.out.println("4 - Update Person");
+		System.out.println("5 - Delete Person");
 		System.out.println("0 - Quit the program");
 		
 		BufferedReader option = new BufferedReader(new InputStreamReader(System.in)); 
