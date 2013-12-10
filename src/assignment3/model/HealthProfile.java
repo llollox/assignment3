@@ -1,5 +1,7 @@
 package assignment3.model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -100,10 +102,16 @@ public class HealthProfile {
 	
 	public String toString(){
 		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		NumberFormat formatter = new DecimalFormat("###.00"); 
+		
 		if (healthprofile_id != null)
-			return healthprofile_id + ") " + weight + "kg, " + height + "m, on " + df.format(date) + " : (" + steps + " steps -> " + calories + " calories)";
+			return healthprofile_id + ") [weight=" + formatter.format(weight) + "kg] [height=" + 
+				formatter.format(height) + "m] [bmi="+ formatter.format(this.getBmi()) + "kg/m2] on " + 
+				df.format(date) + " : (" + steps + " steps -> " + calories + " calories)";
 		else 
-			return weight + "kg, " + height + "m, on " + df.format(date) + " : (" + steps + " steps -> " + calories + " calories)";
+			return "[weight="+formatter.format(weight) + "kg] [height=" + 
+			formatter.format(height) + "m] [bmi="+ formatter.format(this.getBmi()) + "kg/m2] on " + 
+			df.format(date) + " : (" + steps + " steps -> " + calories + " calories)";
 	}
 
 }
