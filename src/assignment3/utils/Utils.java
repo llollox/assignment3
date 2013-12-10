@@ -13,13 +13,15 @@ public class Utils {
 	private static Random random = new Random();
 	
 	public static int getMenuSelection() throws IOException{
-		System.out.println("\nWhat do you want to do?");
+		System.out.println("\n*****************************");
+		System.out.println("\nWhat do you want to do?\n");
 		System.out.println("1 - Print all people");
 		System.out.println("2 - Select a person by Id");
 		System.out.println("3 - Create new Person");
-		System.out.println("4 - Update Person");
-		System.out.println("5 - Delete Person");
-		System.out.println("0 - Quit the program");
+		System.out.println("4 - Update a Person");
+		System.out.println("5 - Delete a Person");
+		System.out.println("\n0 - Quit the program");
+		System.out.println("\n*****************************");
 		
 		BufferedReader option = new BufferedReader(new InputStreamReader(System.in)); 
 		
@@ -34,14 +36,15 @@ public class Utils {
 	}
 	
 	public static int getPersonalMenuSelection() throws IOException{
-		System.out.println("\nPerson selected: " + SoapClient.getSelectedPerson());
-		System.out.println("\nWhat do you want to do?");
+		System.out.println("\n*****************************");
+		System.out.println("\nWhat do you want to do on Person: " + SoapClient.getSelectedPerson() +" ?\n");
 		System.out.println("1 - Read Current Health Profile"); 
 		System.out.println("2 - Read Health Profile History"); 
 		System.out.println("3 - Create a new HealthProfile");
-		System.out.println("4 - Update Health Profile");
-		System.out.println("5 - Delete HealthProfile");
-		System.out.println("0 - Back the main Menu");
+		System.out.println("4 - Update an Health Profile");
+		System.out.println("5 - Delete an HealthProfile");
+		System.out.println("\n0 - Back the main Menu");
+		System.out.println("\n*****************************");
 		
 		BufferedReader option = new BufferedReader(new InputStreamReader(System.in)); 
 		

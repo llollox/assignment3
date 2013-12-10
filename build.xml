@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project 
 	name="Assignment3" basedir="." 
-	default="execute" xmlns:ivy="antlib:org.apache.ivy.ant">
+	default="server" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<property name="build.dir" value="build" />
 	<property name="src.dir" value="src" />
@@ -33,7 +33,7 @@
 		<!-- <echo>Finish compiling sources</echo> -->
 	</target>
 	
-	<target name="startServer" depends="compile">
+	<target name="server" depends="compile">
 		<java classname="assignment3.endpoint.SoapPublisher" classpath="${build.dir}" fork="yes">
 			<classpath>
         <fileset dir="${lib.dir}">
@@ -43,7 +43,7 @@
 		</java>
 	</target>
 
-	<target name="execute" depends="compile">
+	<target name="client" depends="compile">
 		<java classname="assignment3.client.SoapClient" classpath="${build.dir}" fork="yes">
 			<classpath>
 				<fileset dir="${lib.dir}"><include name="**/*.jar" /></fileset>
