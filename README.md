@@ -34,7 +34,8 @@ Dependencies
 -----------
 Dependencies are managed with Ivy tool.
 
-The only thing that you have to do to use Ivy is copy ivy-2.3.0.jar file into your ANT_DIRECTORY/lib and that's all.
+The only thing that you have to do to use Ivy is copy ivy-2.3.0.jar file into 
+`<YOUR_ANT_DIRECTORY>/lib` and that's all.
 
 You can find that file in the root directory of the project.
 
