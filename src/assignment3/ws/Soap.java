@@ -1,8 +1,5 @@
 package assignment3.ws;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -20,27 +17,27 @@ import assignment3.model.Person;
 public interface Soap {
 	@WebMethod
 	@WebResult(partName = "return")
-	public Person getPerson(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	public Person readPerson(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
 	@WebMethod
 	public People getPeople();
 	
-	public Person savePerson(@WebParam(name = "arg0", partName = "arg0") Person arg0);
+	public Long createPerson(@WebParam(name = "arg0", partName = "arg0") Person arg0);
 	
-	public Person updatePerson(@WebParam(name = "arg0", partName = "arg0") Person arg0);
+	public Long updatePerson(@WebParam(name = "arg0", partName = "arg0") Person arg0);
 	
-	public Person deletePerson(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	public Long deletePerson(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
-	public HealthProfileHistory getPersonHealthProfileHistory(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	public HealthProfileHistory getHealthProfileHistory(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
-	public HealthProfile getCurrentHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	public HealthProfile readCurrentHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
-	public HealthProfile getHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	public HealthProfile readHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 	
-	public HealthProfile saveHealthProfile(@WebParam(name = "arg0", partName = "arg0") HealthProfile arg0);
+	public Long createHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0, @WebParam(name = "arg1", partName = "arg1") HealthProfile arg1);
 	
-	public HealthProfile updateHealthProfile(@WebParam(name = "arg0", partName = "arg0") HealthProfile arg0);
+	public Long updateHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0, @WebParam(name = "arg1", partName = "arg1") HealthProfile arg1);
 	
-	public HealthProfile deleteHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
+	public Long deleteHealthProfile(@WebParam(name = "arg0", partName = "arg0") Long arg0);
 
 }

@@ -39,6 +39,15 @@ public class HealthProfile {
 		this.steps = steps;
 		this.calories = calories;
 	}
+	
+	public HealthProfile(Double weight, Double height, Date date, Integer steps, Integer calories) {
+		super();
+		this.weight = weight;
+		this.height = height;
+		this.date = date;
+		this.steps = steps;
+		this.calories = calories;
+	}
 
 	public Long getHealthprofile_id() {
 		return healthprofile_id;

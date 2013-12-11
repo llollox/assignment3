@@ -22,52 +22,63 @@ public class SoapImpl implements Soap {
 	}
 	
 	@Override
-	public Person getPerson(Long personId) {
-		return PersonHibernate.getPerson(personId);
+	public Person readPerson(Long personId) {
+		
+		Person person = PersonHibernate.getPerson(personId);
+		HealthProfile healthProfile = HealthProfileHibernate.getCurrentPersonHealthProfile(personId);
+		if (healthProfile != null)
+			person.setHealthProfile(healthProfile);
+		return person;
 	}
 	
 	@Override
-	public Person savePerson(Person person){
+	public Long createPerson(Person person){
 		return PersonHibernate.savePerson(person);
 	}
 	
 	@Override
-	public Person updatePerson(Person person){
+	public Long updatePerson(Person person){
 		return PersonHibernate.updatePerson(person);
 	}
 	
 	@Override
-	public Person deletePerson(Long personId){
+	public Long deletePerson(Long personId){
 		return PersonHibernate.deletePerson(personId);
 	}
 
 	@Override
-	public HealthProfileHistory getPersonHealthProfileHistory(Long personId) {
+	public HealthProfileHistory getHealthProfileHistory(Long personId) {
 		return new HealthProfileHistory(HealthProfileHibernate.getPersonHealthProfileHistory(personId));
 	}
 	
 	@Override
-	public HealthProfile getHealthProfile(Long hpId) {
+	public HealthProfile readHealthProfile(Long hpId) {
 		return HealthProfileHibernate.getHealthProfile(hpId);	
 	}
 
 	@Override
-	public HealthProfile saveHealthProfile(HealthProfile hp) {
+	public Long createHealthProfile(Long personId, HealthProfile hp) {
+		hp.setPerson_id(personId);
 		return HealthProfileHibernate.saveHealthProfile(hp);
 	}
 
 	@Override
-	public HealthProfile updateHealthProfile(HealthProfile hp) {
-		return HealthProfileHibernate.updateHealthProfile(hp);
+	public Long updateHealthProfile(Long personId, HealthProfile hp) {
+		hp.setPerson_id(personId);
+		
+		if(hp.getHealthprofile_id() != null) // if id is present -> update it
+			return HealthProfileHibernate.updateHealthProfile(hp);
+		else // no id present -> create it
+			return HealthProfileHibernate.saveHealthProfile(hp);
 	}
 
 	@Override
-	public HealthProfile deleteHealthProfile(Long hpId) {
+	public Long deleteHealthProfile(Long hpId) {
 		return HealthProfileHibernate.deleteHealthProfile(hpId);
 	}
 
 	@Override
-	public HealthProfile getCurrentHealthProfile(Long personId) {
+	public HealthProfile readCurrentHealthProfile(Long personId) {
 		return HealthProfileHibernate.getCurrentPersonHealthProfile(personId);
 	}
 

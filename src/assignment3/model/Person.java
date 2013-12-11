@@ -20,8 +20,9 @@ public class Person {
 
 	private String firstname;
 	private String lastname;
-
 	private Date birthdate;
+	
+	private HealthProfile healthProfile;
 
 	public Person() {
 		super();
@@ -72,12 +73,20 @@ public class Person {
 		this.birthdate = birthdate;
 	}
 	
+	public HealthProfile getHealthProfile() {
+		return healthProfile;
+	}
+
+	public void setHealthProfile(HealthProfile healthProfile) {
+		this.healthProfile = healthProfile;
+	}
+	
 	public String toString(){
 		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		if (person_id != null)
+		if (healthProfile != null)
+			return person_id + ") " + firstname + " " + lastname + ": " + df.format(birthdate) + " - Current Health Profile: " + healthProfile;
+		else
 			return person_id + ") " + firstname + " " + lastname + ": " + df.format(birthdate);
-		else 
-			return firstname + " " + lastname + ": " + df.format(birthdate);
 	}
 
 	@Override

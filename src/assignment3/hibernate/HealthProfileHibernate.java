@@ -12,7 +12,7 @@ import assignment3.model.HealthProfile;
 
 public class HealthProfileHibernate {
 
-	public static HealthProfile saveHealthProfile(HealthProfile hp) {
+	public static Long saveHealthProfile(HealthProfile hp) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 
@@ -27,15 +27,16 @@ public class HealthProfileHibernate {
 			// rollback transaction
 			if (transaction != null) {
 				transaction.rollback();
+				return (long) -1;
 			}
 		} finally {
 			session.close();
 		}
 
-		return hp;
+		return hp.getHealthprofile_id();
 	}
 
-	public static HealthProfile updateHealthProfile(HealthProfile hp) {
+	public static Long updateHealthProfile(HealthProfile hp) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 
@@ -51,15 +52,16 @@ public class HealthProfileHibernate {
 			// rollback transaction
 			if (transaction != null) {
 				transaction.rollback();
+				return (long) -1;
 			}
 		} finally {
 			session.close();
 		}
 
-		return hp;
+		return hp.getHealthprofile_id();
 	}
 
-	public static HealthProfile deleteHealthProfile(Long hp_id) {
+	public static Long deleteHealthProfile(Long hp_id) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 		HealthProfile hp = null;
@@ -76,12 +78,13 @@ public class HealthProfileHibernate {
 			// rollback transaction
 			if (transaction != null) {
 				transaction.rollback();
+				return (long) -1;
 			}
 		} finally {
 			session.close();
 		}
 		
-		return hp;
+		return (long) 0;
 	}
 
 	public static HealthProfile getHealthProfile(Long hp_id) {

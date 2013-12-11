@@ -59,7 +59,7 @@ public class PersonHibernate {
 		return people;
 	}
 	
-	public static Person savePerson(Person person) {
+	public static Long savePerson(Person person) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 
@@ -75,15 +75,16 @@ public class PersonHibernate {
 			// rollback transaction
 			if (transaction != null) {
 				transaction.rollback();
+				return (long) -1;
 			}
 		} finally {
 			session.close();
 		}
 
-		return person;
+		return person.getPerson_id();
 	}
 
-	public static Person updatePerson(Person person) {
+	public static Long updatePerson(Person person) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 
@@ -99,15 +100,16 @@ public class PersonHibernate {
 			// rollback transaction
 			if (transaction != null) {
 				transaction.rollback();
+				return (long) -1;
 			}
 		} finally {
 			session.close();
 		}
 
-		return person;
+		return person.getPerson_id();
 	}
 
-	public static Person deletePerson(Long p_id) {
+	public static Long deletePerson(Long p_id) {
 		Session session = Hibernate.getSessionFactory().openSession();
 		Transaction transaction = null;
 		Person person = null;
@@ -123,12 +125,13 @@ public class PersonHibernate {
 			// rollback transaction
 			if (transaction != null) {
 				transaction.rollback();
+				return (long) -1;
 			}
 		} finally {
 			session.close();
 		}
 
-		return person;
+		return (long) 0;
 	}
 
 }

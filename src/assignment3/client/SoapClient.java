@@ -47,7 +47,7 @@ public class SoapClient{
 			case 2:// Select a person by Id
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
-					Person p = soapInterface.getPerson(personId);
+					Person p = soapInterface.readPerson(personId);
 					
 					SoapClient.setSelectedPerson(p);
 					personalMenu();
@@ -64,9 +64,9 @@ public class SoapClient{
 					String lastname = Utils.inputString("Lastname");
 					Date birthdate = new SimpleDateFormat("dd-MM-yyyy").parse(Utils.inputString("birthdate (dd-mm-yyyy)"));
 					
-					Person person = soapInterface.savePerson(new Person(firstname, lastname, birthdate));
+					Long personId = soapInterface.createPerson(new Person(firstname, lastname, birthdate));
 					
-					System.out.println("\nPerson Created: "+person);
+					System.out.println("\nPerson Created with Success! Id : "+personId);
 				} catch (Exception e) {
 					System.out.println("\nSorry! Some problems occurs during create person!");
 				}
@@ -75,7 +75,7 @@ public class SoapClient{
 			case 4:// Update Person
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
-					Person person = soapInterface.getPerson(personId);
+					Person person = soapInterface.readPerson(personId);
 					
 					String firstname = Utils.inputString("Firstname");
 					String lastname = Utils.inputString("Lastname");
@@ -85,7 +85,7 @@ public class SoapClient{
 					person.setLastname(lastname);
 					person.setBirthdate(birthdate);
 					
-					System.out.println("\nPerson Modified: "+soapInterface.updatePerson(person));
+					System.out.println("\nPerson Modified with Success! Id : "+soapInterface.updatePerson(person));
 				
 				} catch (Exception e) {
 					System.out.println("\nSorry! Some problems occurs during update person!");
@@ -95,7 +95,8 @@ public class SoapClient{
 			case 5: //Delete Person
 				try {
 					Long personId = Long.parseLong(Utils.inputString("Person Id"));
-					System.out.println("\nPerson Deleted: "+soapInterface.deletePerson(personId));
+					soapInterface.deletePerson(personId); // if exception occurs the catch will be executed!
+					System.out.println("\nPerson Deleted with Success!");
 				} catch (Exception e) {
 					System.out.println("\nSorry! Some problems occurs during delete person!");
 				}
@@ -122,7 +123,7 @@ public class SoapClient{
 				
 				case 1: // Read CURRENT Health Profile
 					try {
-						HealthProfile hp = soapInterface.getCurrentHealthProfile(SoapClient.getSelectedPerson().getPerson_id());
+						HealthProfile hp = soapInterface.readCurrentHealthProfile(SoapClient.getSelectedPerson().getPerson_id());
 						System.out.println(hp);
 					} catch (Exception e) {
 						System.out.println("\nHealthProfile not found!");
@@ -131,7 +132,7 @@ public class SoapClient{
 				
 				case 2: // Read Health Profile History
 					try {
-						for (HealthProfile hp : soapInterface.getPersonHealthProfileHistory(
+						for (HealthProfile hp : soapInterface.getHealthProfileHistory(
 								SoapClient.getSelectedPerson().getPerson_id()).getHealthProfileHistory()) {
 							System.out.println(hp);
 						}
@@ -148,8 +149,9 @@ public class SoapClient{
 						int calories = ((Double) ((double) steps * Utils.randBetween(0.03,0.04))).intValue();
 						Date date = new Date();
 						
-						HealthProfile hp = new HealthProfile(SoapClient.getSelectedPerson().getPerson_id(), weight, height, date, steps, calories);
-						System.out.println("\nHealthProfile Created: "+soapInterface.saveHealthProfile(hp));		
+						HealthProfile hp = new HealthProfile(weight, height, date, steps, calories);
+						System.out.println("\nHealthProfile Created with Success! Id : "+ 
+								soapInterface.createHealthProfile(SoapClient.getSelectedPerson().getPerson_id(),hp));		
 						
 					} catch (Exception e) {
 						System.out.println("\nSorry! Some problems occurs during create new health profile!");
@@ -160,7 +162,7 @@ public class SoapClient{
 				
 					try {
 						Long healthProfileId = Long.parseLong(Utils.inputString("Health Profile Id"));
-						HealthProfile hp = soapInterface.getHealthProfile(healthProfileId);
+						HealthProfile hp = soapInterface.readHealthProfile(healthProfileId);
 						
 						Double weight = Double.parseDouble(Utils.inputString("Weight"));
 						Double height = Double.parseDouble(Utils.inputString("Height"));
@@ -174,7 +176,8 @@ public class SoapClient{
 						hp.setSteps(steps);
 						hp.setCalories(calories);
 						
-						System.out.println("\nHealthProfile Updated: "+soapInterface.updateHealthProfile(hp));
+						System.out.println("\nHealthProfile Updated with Success! Id : "+
+								soapInterface.updateHealthProfile(SoapClient.getSelectedPerson().getPerson_id(), hp));
 					} catch (Exception e) {
 						System.out.println("\nSorry! Some problems occurs during update new health profile!");
 					}
@@ -184,7 +187,8 @@ public class SoapClient{
 				case 5:  // Delete Health Profile
 					try {
 						Long healthProfileId = Long.parseLong(Utils.inputString("Health Profile Id"));
-						System.out.println("\nHealthProfile Deleted: "+soapInterface.deleteHealthProfile(healthProfileId));
+						soapInterface.deleteHealthProfile(healthProfileId);
+						System.out.println("\nHealthProfile Deleted with Success!");
 					} catch (Exception e) {
 						System.out.println("\nSorry! Some problems occurs during delete new health profile!");
 					}
