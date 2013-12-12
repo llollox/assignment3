@@ -1,7 +1,5 @@
 package assignment3.ws;
 
-import java.util.ArrayList;
-
 import javax.jws.WebService;
 
 import assignment3.hibernate.HealthProfileHibernate;
