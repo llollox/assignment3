@@ -137,7 +137,7 @@ public class SoapClient {
 					HealthProfile hp = soapInterface
 							.readCurrentHealthProfile(SoapClient
 									.getSelectedPerson().getPerson_id());
-					System.out.println(hp);
+					System.out.println("Current Health Profile: " + hp);
 				} catch (Exception e) {
 					System.out.println("\nHealthProfile not found!");
 				}
@@ -145,6 +145,7 @@ public class SoapClient {
 
 			case 2: // Read Health Profile History
 				try {
+					System.out.println("Health Profile History: \n");
 					for (HealthProfile hp : soapInterface
 							.getHealthProfileHistory(
 									SoapClient.getSelectedPerson()

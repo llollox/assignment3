@@ -37,7 +37,7 @@ public class Utils {
 	
 	public static int getPersonalMenuSelection() throws IOException{
 		System.out.println("\n*****************************");
-		System.out.println("\nWhat do you want to do on Person: " + SoapClient.getSelectedPerson() +" ?\n");
+		System.out.println("\n" + SoapClient.getSelectedPerson() +"\n\nWhat do you want to do on this person ?\n");
 		System.out.println("1 - Read Current Health Profile"); 
 		System.out.println("2 - Read Health Profile History"); 
 		System.out.println("3 - Create a new HealthProfile");
