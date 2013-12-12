@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -21,7 +23,9 @@ public class Person {
 	private String firstname;
 	private String lastname;
 	private Date birthdate;
-	
+
+	@Transient
+	@XmlElement
 	private HealthProfile healthProfile;
 
 	public Person() {
@@ -72,7 +76,7 @@ public class Person {
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-	
+
 	public HealthProfile getHealthProfile() {
 		return healthProfile;
 	}
@@ -80,13 +84,16 @@ public class Person {
 	public void setHealthProfile(HealthProfile healthProfile) {
 		this.healthProfile = healthProfile;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		if (healthProfile != null)
-			return person_id + ") " + firstname + " " + lastname + ": " + df.format(birthdate) + " - Current Health Profile: " + healthProfile;
+			return person_id + ") " + firstname + " " + lastname + ": "
+					+ df.format(birthdate) + " - Current Health Profile: "
+					+ healthProfile;
 		else
-			return person_id + ") " + firstname + " " + lastname + ": " + df.format(birthdate);
+			return person_id + ") " + firstname + " " + lastname + ": "
+					+ df.format(birthdate);
 	}
 
 	@Override
@@ -115,4 +122,3 @@ public class Person {
 		return true;
 	}
 }
-
